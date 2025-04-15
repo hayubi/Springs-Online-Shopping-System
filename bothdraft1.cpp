@@ -63,7 +63,7 @@ int main()
         else if (choice == 2)
             s.Register();
         else
-            cout << "Invalid choice. Please select option 1 or 2." << endl;
+            cout << "Invalid choice. Please only select option 1 or 2." << endl;
     } while (choice != 1 && choice != 2);
 
 
