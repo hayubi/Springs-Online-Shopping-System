@@ -16,28 +16,11 @@ class User
         User() : name(""), id(0), email(""){}
         User(string n, int ID, string e): name(n), id(ID), email(e) {}
 
-        virtual void Register();
+        virtual void Register() {};
 };
 
 
-class Seller : public User
-{
-    protected:
-        int sellerID;
-        string name;
-        string email;
-        //sellers array
-
-    public:
-        Seller() {}
-
-        void Register() override
-        {
-            cout << "cust";
-        }
-};
-
-class Product : public Seller //make product a friend class
+class Product //make product a friend class
 {
     private:
         int productID;
@@ -94,7 +77,30 @@ class Product : public Seller //make product a friend class
         void setdesc(int desc) { description = desc; }
         void setqty(int qty) { quantity = qty; }
 
-}
+};
+
+class Seller : public User
+{
+    private:
+        //sellers array
+
+    public:
+        Seller() {}
+        Seller(string n, int ID, string e) : User(n, ID, e) {}
+
+        void Register() override
+        {
+            cout << "\n-----------------------------------------\n";
+            cout << " Enter the following details for Seller: \n  ID: ";
+            cin >> id;
+            cout << "  Name: ";
+            cin >> name;
+            cout << "  Email: ";
+            cin >> email;
+        }
+
+        friend class Product;
+};
 
 
 class Customer : public User
@@ -103,13 +109,38 @@ class Customer : public User
 
     public:
         Customer() {}
+        Customer(string n, int ID, string e) : User(n, ID, e) {}
 
         void Register() override
         {
-            cout << "cust";
-        }      
+            cout << "\n-------------------------------------------\n";
+            cout << " Enter the following details for Customer: \n  ID: ";
+            cin >> id;
+            cout << "  Name: ";
+            cin >> name;
+            cout << "  Email: ";
+            cin >> email;
+        }   
 };
 
+
+class Cart
+{
+
+};
+
+
+class Shoppingsystem
+{
+    private:
+        Seller sellers;
+        Customer customers;
+        Product products;
+
+    public:
+        Shoppingsystem() {}
+        
+};
 
 
 int main()
@@ -117,16 +148,16 @@ int main()
     Seller s;
     Customer c;
 
-    int choice;
+    string choice; //made it string and not int bcz if anything other than integer is entered,,,it was working giving infinite couts
     do
     {
-        cout << "Are you interested in\n(1) Buying\n(2) Selling? ";
+        cout << "\nAre you interested in\n(1) Buying\n(2) Selling? \n Option: ";
         cin >> choice;
-        if (choice == 1)
+        if (choice == "1")
             c.Register();
-        else if (choice == 2)
+        else if (choice == "2")
             s.Register();
         else
             cout << "Invalid choice. Please only select option 1 or 2." << endl;
-    } while (choice != 1 && choice != 2);
+    } while (choice != "1" && choice != "2");
 }
