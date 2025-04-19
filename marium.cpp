@@ -2,7 +2,7 @@
 
 class ShoppingCart {
 private:
-    vector<Product> cartItems;
+    vector<Product> cartItems;//to work with cart item arrays
 
 public:
     void display() const {
