@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <string>
 using namespace std;
 
@@ -27,42 +28,17 @@ class Product //make product a friend class
         float price;
         string description;
         int quantity;
-        //products array
-        //static int totalproducts;
-        //int productcount;
 
     public:
         Product() : productID(0), price(0.0), description(""), quantity(0) {}
         Product(int id, float p, string desc, int qty) : productID(id), price(p), description(desc), quantity(qty) {}
-
-        void addProduct(int id, float price, string description, int quantity)
+        
+        void display() const
         {
-            
-        }
-
-        void deleteProduct(int id, float price, string description, int quantity)
-        {
-
-        }
-
-        void updateProductPrice(int id, float price)
-        {
-
-        }
-
-        void updateProductDesc(int id, string description)
-        {
-
-        }
-
-        void viewProductDetails()
-        {
-
-        }
-
-        void viewAllProducts()
-        {
-
+            cout << "Product ID: " << productID << endl;
+            cout << "Price: Rs" << price << endl;
+            cout << "Description: " << description << endl;
+            cout << "Quantity: " << quantity << endl;
         }
 
         //Getters
@@ -72,16 +48,18 @@ class Product //make product a friend class
         int getQuantity() { return quantity; }
 
         //Setters
-        void setProdID(int pid) { productID = pid; }
         void setprice(float p) { price = p; }
-        void setdesc(int desc) { description = desc; }
+        void setdesc(string desc) { description = desc; }
         void setqty(int qty) { quantity = qty; }
+
+        friend class Seller; //seller can access product
 
 };
 
 class Seller : public User
 {
     private:
+        vector<Product> products;
         //sellers array
 
     public:
@@ -99,7 +77,100 @@ class Seller : public User
             cin >> email;
         }
 
-        friend class Product;
+        void addProduct(int ID, float price, string description, int quantity)
+        {
+            Product p(ID, price, description, quantity);
+            products.push_back(p);
+            cout << "Product " << ID << " added." << endl;
+        }
+
+        void deleteProduct(int ID)
+        {
+            for (auto it = products.begin(); it != products.end(); ++it) 
+            {
+                if (it->productID == ID) 
+                {
+                    products.erase(it);
+                    cout << "Product " << ID << " deleted." << endl;
+                    return;
+                }
+            }  
+            cout << "Product ID " << ID << " not found" << endl;
+        }
+
+        void updateProductPrice(int ID, float p)
+        {
+            for (int i=0; i<products.size(); i++)
+            {
+                if (products[i].productID == ID)
+                {
+                    products[i].setprice(p);
+                    cout << "Product " << ID << " price updated." << endl;
+                    return;
+                }
+            }
+            cout << "Product " << ID << " not found." << endl;
+        }
+
+        void updateProductDesc(int ID, string d)
+        {
+            for (int i=0; i<products.size(); i++)
+            {
+                if (products[i].productID == ID)
+                {
+                    products[i].setdesc(d);
+                    cout << "Product " << ID << " description updated." << endl;
+                    return;
+                }
+            }
+            cout << "Product " << ID << " not found." << endl;
+        }
+
+        void updateProductQty(int ID, int q)
+        {
+            for (int i=0; i<products.size(); i++)
+            {
+                if (products[i].productID == ID)
+                {
+                    products[i].setqty(q);
+                    cout << "Product " << ID << " quantity updated." << endl;
+                    return;
+                }
+            }
+            cout << "Product " << ID << " not found." << endl;
+        }
+
+        void viewProductDetails(int ID) const
+        {
+            for (int i=0; i<products.size(); i++)
+            {
+                if (products[i].productID == ID)
+                {
+                    cout << "Product Details for " << ID << endl;
+                    products[i].display();
+                    return;
+                }
+            }
+            cout << "Product " << ID << " not found." << endl;
+        }
+
+        void viewAllProducts() const
+        {
+            if (products.empty())
+            {
+                cout << "No products to display." << endl;
+                return;
+            }
+            else
+            {
+                cout << "----All Products----" << endl;
+                for (int i=0; i<products.size(); i++)
+                {
+                    products[i].display();
+                    cout << "------------" << endl;
+                }
+            }
+        }
 };
 
 
