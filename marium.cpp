@@ -22,6 +22,11 @@ class Customer : public User {
             cin >> name;
             cout << "  Email: ";
             cin >> email;
+            cout<<"  Address: ";
+            cin>>address;
+            cout<<"  Phone Number: ";
+            cin>>phone_num;
+
         }
     
         void viewProducts(int productID, float price) {
@@ -32,13 +37,11 @@ class Customer : public User {
                 cout << "Quantity: " << productItems[i].getQuantity() << endl;
             }
         }
-    
-        // Getters
+     
         double getPhoneNum() const { return phone_num; }
         string getAddress() const { return address; }
         vector<Product>& getProductItems() { return productItems; }
-    
-        // Setters
+     
         void setPhoneNum(double num) { phone_num = num; }
         void setAddress(string addr) { address = addr; }
         void addProductToCart(Product p) { productItems.push_back(p); }
