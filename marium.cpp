@@ -29,7 +29,7 @@ class Customer : public User {
 
         }
     
-        void viewProducts(int productID, float price) {
+        void viewProducts(int productID, float price) {  //also can add to sellerfunctions class directly
             for (size_t i = 0; i < productItems.size(); i++) {
                 cout << "Product ID: " << productItems[i].getProdID() << endl;
                 cout << "Price: $" << productItems[i].getPrice() << endl;
