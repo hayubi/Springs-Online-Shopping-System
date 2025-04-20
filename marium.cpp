@@ -17,19 +17,19 @@ class Customer : public User {
         void Register() override {
             cout << "\n-------------------------------------------\n";
             cout << " Enter the following details for Customer: \n  ID: ";
-            cin >> id;
-            cout << "  Name: ";
-            cin >> name;
-            cout << "  Email: ";
-            cin >> email;
-            cout<<"  Address: ";
-            cin>>address;
-            cout<<"  Phone Number: ";
-            cin>>phone_num;
+          
+            cout << "  Name: \n";
+          
+            cout << "  Email: \n";
+           
+            cout<<"  Address: \n";
+        
+            cout<<"  Phone Number: \n";
+           
 
         }
     
-        void viewProducts(int productID, float price) {  //also can add to sellerfunctions class directly
+        void viewProducts(int productID, float price) {  //also can add to shoppingsystem/products class directly
             for (size_t i = 0; i < productItems.size(); i++) {
                 cout << "Product ID: " << productItems[i].getProdID() << endl;
                 cout << "Price: $" << productItems[i].getPrice() << endl;
@@ -37,6 +37,15 @@ class Customer : public User {
                 cout << "Quantity: " << productItems[i].getQuantity() << endl;
             }
         }
+
+int getId() const { return id; }
+    string getName() const { return name; }
+    string getEmail() const { return email; }
+
+    void setId(int i) { id = i; }
+    void setName(string n) { name = n; }
+    void setEmail(string e) { email = e; }
+
      
         double getPhoneNum() const { return phone_num; }
         string getAddress() const { return address; }
@@ -46,6 +55,8 @@ class Customer : public User {
         void setAddress(string addr) { address = addr; }
         void addProductToCart(Product p) { productItems.push_back(p); }
     };
+
+
 
 class ShoppingCart {
 private:
