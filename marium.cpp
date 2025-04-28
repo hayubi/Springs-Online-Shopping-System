@@ -1,4 +1,8 @@
 //shoppingcart class and functions using product class functions, change to as product class is friend
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
 
 
 class Customer : public User {
@@ -164,6 +168,8 @@ cart.viewCart();
 cart.addProduct(p3);
 cart.checkout();
 cart.viewCart();
+
+
 
 return 0;
 }
