@@ -20,7 +20,6 @@ class Seller : public User
         void addProduct();
         void removeProduct();
         void updateProduct();
-        void viewProducts() const;
         void displayMenu() const override;
 };
 
