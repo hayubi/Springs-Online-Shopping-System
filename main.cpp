@@ -76,14 +76,7 @@ void handleCustomerSession(Customer& customer, ProductManager& pm)
 
     do 
     {
-        cout << "\n===== CUSTOMER MENU =====\n"
-             << "1. View Products\n"
-             << "2. Add to Cart\n"
-             << "3. View Cart\n"
-             << "4. Checkout\n"
-             << "5. Set Price Filter (Min $200)\n"
-             << "0. Logout\n"
-             << "Choice: ";
+        customer.displayMenu();
         cin >> choice;
 
         if (choice == 1)
@@ -166,13 +159,7 @@ void handleSellerSession(Seller& seller, ProductManager& pm)
     int choice;
     do 
     {
-        cout << "\n===== SELLER MENU =====\n"
-             << "1. Add Product\n"
-             << "2. Update Product\n"
-             << "3. Remove Product\n"
-             << "4. View My Products\n"
-             << "0. Logout\n"
-             << "Choice: ";
+        seller.displayMenu();
         cin >> choice;
 
         if (choice == 1) 
