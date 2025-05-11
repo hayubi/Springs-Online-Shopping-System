@@ -16,6 +16,7 @@ void Seller::displayMenu() const
     cout << "3. Remove Product\n";
     cout << "4. View My Products\n";
     cout << "0. Logout\n";
+    cout << "Choice: ";
 }
 
 void Seller::addProduct() 
