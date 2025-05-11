@@ -68,17 +68,7 @@ void Customer::buy_product()
     }
 }
 
-void Customer::checkout() 
-{
-    double total = cart.getTotal();
-    cout << "Cart Total: $" << total << "\n";
-    double discount = points * 0.1;
-    if (discount > total) discount = total;
-    cout << "Points Discount: $" << discount << "\n";
-    cout << "Final Total: $" << total - discount << "\n";
-
-    points = 0;
-}
+ 
 
 void Customer::displayMenu() const 
 {
