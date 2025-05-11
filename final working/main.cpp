@@ -1,3 +1,6 @@
+// g++ main.cpp User.cpp Customer.cpp Seller.cpp Product.cpp Cart.cpp ProductManager.cpp -o ShoppingSystem.exe
+// ./ShoppingSystem.exe
+
 #include <iostream>
 #include <string>
 #include <fstream>
