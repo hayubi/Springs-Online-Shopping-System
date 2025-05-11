@@ -1,0 +1,12 @@
+111 bag 4.5 20 seller1@gmail.com
+222 bottle 5.3 24 seller1@gmail.com
+211 chocolate 4 50 seller2@gmail.com
+212 chips 2.1 60 seller2@gmail.com
+214 juice 5.2 56 seller2@gmail.com
+215 jelly 0.9 60 seller2@gmail.com
+333 pencil 0.5 100 seller1@gmail.com
+963 mouse 12.5 16 seller3@gmail.com
+658 keyboard 15.2 23 seller3@gmail.com
+453 monitor 29.8 12 seller3@gmail.com
+479 USB 7.8 36 seller3@gmail.com
+216 biscuit 2.8 54 seller2@gmail.com
