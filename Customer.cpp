@@ -72,5 +72,12 @@ void Customer::buy_product()
 
 void Customer::displayMenu() const 
 {
-    cout << "Customer Menu:\n1. Browse Products\n2. View Cart\n3. Checkout\n";
+    cout << "\n===== CUSTOMER MENU =====\n"
+             << "1. View Products\n"
+             << "2. Add to Cart\n"
+             << "3. View Cart\n"
+             << "4. Checkout\n"
+             << "5. Set Price Filter (Min $200)\n"
+             << "0. Logout\n"
+             << "Choice: ";
 }
