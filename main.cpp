@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <exception>
 #include "User.h"
 #include "Customer.h"
 #include "Seller.h"
@@ -17,7 +18,7 @@ double applyDiscount(double total)
     if (total > 500) 
     {
         double discount = total * 10;
-        cout << "🎉 You received a 10% discount! You saved $" << discount << "\n";
+        cout << "You received a 10% discount! You saved $" << discount << "\n";
         return total - discount;
     }
     return total;
@@ -26,6 +27,7 @@ double applyDiscount(double total)
 bool validateLogin(const string& filename, const string& email, const string& password) 
 {
     ifstream file(filename);
+    if (!file.is_open()) throw runtime_error("Could not open file: " + filename);
     string fileEmail, filePassword;
     while (file >> fileEmail >> filePassword) 
     {
@@ -50,6 +52,7 @@ bool isValidEmailFormat(const string& email)
 bool isEmailUnique(const string& filename, const string& email) 
 {
     ifstream fin(filename);
+    if (!fin.is_open()) throw runtime_error("Could not open file: " + filename);
     string storedEmail, storedPassword;
     while (fin >> storedEmail >> storedPassword) 
     {
@@ -61,6 +64,7 @@ bool isEmailUnique(const string& filename, const string& email)
 void saveUser(const string& filename, const string& email, const string& password) 
 {
     ofstream fout(filename, ios::app);
+    if (!fout.is_open()) throw runtime_error("Could not open file to save user: " + filename);
     fout << email << " " << password << "\n";
     fout.close();
 }
@@ -111,7 +115,6 @@ void handleCustomerSession(Customer& customer, ProductManager& pm)
         {
             if (cart.empty())
                 cout << "Cart is empty.\n";
-
             else 
             {
                 double total = 0;
@@ -223,76 +226,85 @@ void handleSellerSession(Seller& seller, ProductManager& pm)
 
 int main() 
 {
-    ProductManager productManager;
-    productManager.loadProductsFromFile();
-
-    while (true) 
+    try 
     {
-        cout << "\n===== MAIN MENU =====\n"
-             << "1. Login\n"
-             << "2. Register\n"
-             << "0. Exit\n"
-             << "Choice: ";
+        ProductManager productManager;
+        productManager.loadProductsFromFile();
 
-        int mainChoice;
-        cin >> mainChoice;
-
-        if (mainChoice == 0) break;
-
-        string email, password;
-        cout << "Email: ";
-        cin >> email;
-        cout << "Password: ";
-        cin >> password;
-
-        if (mainChoice == 2) 
+        while (true) 
         {
-            if (!isValidEmailFormat(email)) 
+            cout << "\n===== MAIN MENU =====\n"
+                 << "1. Login\n"
+                 << "2. Register\n"
+                 << "0. Exit\n"
+                 << "Choice: ";
+
+            int mainChoice;
+            cin >> mainChoice;
+
+            if (mainChoice == 0) break;
+
+            string email, password;
+            cout << "Email: ";
+            cin >> email;
+            cout << "Password: ";
+            cin >> password;
+
+            if (mainChoice == 2) 
             {
-                cout << "Invalid email format.\n";
-                continue;
-            }
-            if (!isEmailUnique("users.txt", email)) 
-            {
-                cout << "Email already exists.\n";
+                if (!isValidEmailFormat(email)) 
+                {
+                    cout << "Invalid email format.\n";
+                    continue;
+                }
+                if (!isEmailUnique("users.txt", email)) 
+                {
+                    cout << "Email already exists.\n";
+                    continue;
+                }
+
+                int role;
+                cout << "Register as:\n1. Customer\n2. Seller\nChoice: ";
+                cin >> role;
+
+                saveUser("users.txt", email, password);
+                saveUser(role == 1 ? "customers.txt" : "sellers.txt", email, password);
+                cout << "Registration successful.\n";
                 continue;
             }
 
             int role;
-            cout << "Register as:\n1. Customer\n2. Seller\nChoice: ";
-            cin >> role;
+            if (validateLogin("customers.txt", email, password)) 
+                role = 1;
+            else if (validateLogin("sellers.txt", email, password)) 
+                role = 2;
+            else 
+            {
+                cout << "Invalid credentials.\n";
+                continue;
+            }
 
-            saveUser("users.txt", email, password);
-            saveUser(role == 1 ? "customers.txt" : "sellers.txt", email, password);
-            cout << "Registration successful.\n";
-            continue;
+            if (role == 1) 
+            {
+                Customer customer(email, password);
+                handleCustomerSession(customer, productManager);
+            } 
+            else 
+            {
+                Seller seller(email, password, productManager);
+                handleSellerSession(seller, productManager);
+            }
         }
 
-        int role;
-        if (validateLogin("customers.txt", email, password)) 
-            role = 1;
-
-        else if (validateLogin("sellers.txt", email, password)) 
-            role = 2;
-
-        else 
-        {
-            cout << "Invalid credentials.\n";
-            continue;
-        }
-
-        if (role == 1) 
-        {
-            Customer customer(email, password);
-            handleCustomerSession(customer, productManager);
-        } 
-        else 
-        {
-            Seller seller(email, password, productManager);
-            handleSellerSession(seller, productManager);
-        }
+        productManager.saveProductsToFile();
+        cout << "Goodbye!\n";
     }
-
-    productManager.saveProductsToFile();
-    cout << "Goodbye!\n";
+    catch (const exception& ex) 
+    {
+        cerr << "Exception: " << ex.what() << endl;
+    }
+    catch (...) 
+    {
+        cerr << "Unknown error occurred!" << endl;
+    }
 }
