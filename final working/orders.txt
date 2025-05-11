@@ -1,0 +1,5 @@
+Customer: hello123@gmail.com
+Ordered Products:
+ID: 893, Name: bottle, Qty: 1, Price: 5.4, Seller: hayubi53@gmail.com, Total: 5.4
+Grand Total: 5.4
+
