@@ -6,9 +6,6 @@
 #include <vector>
 using namespace std;
 
-void displayAllProducts();
-void updateProductQuantity(int productId, int newQuantity);
-
 class Seller : public User 
 {
     private:
