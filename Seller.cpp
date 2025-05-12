@@ -6,7 +6,7 @@
 #include <iomanip>
 using namespace std;
 
-Seller::Seller(string n, string e, ProductManager& pm) : User(n, e), productManager(pm) {}
+Seller::Seller(const string& n, const string& c, const string& add, const string& mail, const string& pass, ProductManager& pm) : User(n, c, add, mail, pass), productManager(pm) {}
 
 void Seller::displayMenu() const 
 {
