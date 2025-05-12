@@ -61,12 +61,33 @@ bool isEmailUnique(const string& filename, const string& email)
     return true;
 }
 
-void saveUser(const string& filename, const string& email, const string& password) 
+void saveUser(const string& filename, const string& email, const string& password, const string& name, const string& contact, const string& address) 
 {
     ofstream fout(filename, ios::app);
-    if (!fout.is_open()) throw runtime_error("Could not open file to save user: " + filename);
-    fout << email << " " << password << "\n";
+    if (!fout.is_open()) 
+        throw runtime_error("Could not open file to save user: " + filename);
+    fout << email << " " << password << " " << name << " " << contact << " " << address << "\n";
     fout.close();
+}
+
+bool loadUserDetails(const string& filename, const string& email, const string& password, string& name, string& contact, string& address) 
+{
+    ifstream fin(filename);
+    if (!fin.is_open()) 
+        throw runtime_error("Could not open file: " + filename);
+
+    string fileEmail, filePassword, fileName, fileContact, fileAddress;
+    while (fin >> fileEmail >> filePassword >> fileName >> fileContact >> fileAddress) 
+    {
+        if (fileEmail == email && filePassword == password) 
+        {
+            name = fileName;
+            contact = fileContact;
+            address = fileAddress;
+            return true;
+        }
+    }
+    return false;
 }
 
 void handleCustomerSession(Customer& customer, ProductManager& pm) 
@@ -228,14 +249,21 @@ int main()
 
             int mainChoice;
             cin >> mainChoice;
+            cin.ignore(); // Add this to discard leftover newline before getline
 
             if (mainChoice == 0) break;
 
-            string email, password;
-            cout << "Email: ";
-            cin >> email;
-            cout << "Password: ";
-            cin >> password;
+            string name, contact, address, email, password;
+            cout << "Enter Name: ";
+            getline(cin, name);
+            cout << "Enter Contact: ";
+            getline(cin, contact);
+            cout << "Enter Address: ";
+            getline(cin, address);
+            cout << "Enter Email: ";
+            getline(cin, email);
+            cout << "Enter Password: ";
+            getline(cin, password);
 
             if (mainChoice == 2) 
             {
@@ -250,21 +278,25 @@ int main()
                     continue;
                 }
 
+                
+
                 int role;
                 cout << "Register as:\n1. Customer\n2. Seller\nChoice: ";
                 cin >> role;
 
-                saveUser("users.txt", email, password);
-                saveUser(role == 1 ? "customers.txt" : "sellers.txt", email, password);
+                saveUser("users.txt", email, password, name, contact, address);
+                saveUser(role == 1 ? "customers.txt" : "sellers.txt", email, password, name, contact, address);
+
                 cout << "Registration successful.\n";
                 continue;
             }
 
             int role;
-            if (validateLogin("customers.txt", email, password)) 
+            if (loadUserDetails("customers.txt", email, password, name, contact, address)) 
                 role = 1;
-            else if (validateLogin("sellers.txt", email, password)) 
+            else if (loadUserDetails("sellers.txt", email, password, name, contact, address)) 
                 role = 2;
+
             else 
             {
                 cout << "Invalid credentials.\n";
@@ -273,14 +305,15 @@ int main()
 
             if (role == 1) 
             {
-                Customer customer(email, password);
+                Customer customer(name, contact, address, email, password);
                 handleCustomerSession(customer, productManager);
             } 
             else 
             {
-                Seller seller(email, password, productManager);
+                Seller seller(name, contact, address, email, password, productManager);
                 handleSellerSession(seller, productManager);
             }
+
         }
 
         productManager.saveProductsToFile();
