@@ -3,7 +3,7 @@
 #include <fstream>
 using namespace std;
 
-Customer::Customer(string n, string e, int pts) : User(n, e), points(pts) {}
+Customer::Customer(const string& n, const string& c, const string& add, const string& mail, const string& pass, int pts) : User(n, c, add, mail, pass), points(pts) {}
 
 void Customer::addToCart(const Product& p) 
 {
@@ -68,7 +68,6 @@ void Customer::buy_product()
     }
 }
 
- 
 
 void Customer::displayMenu() const 
 {
