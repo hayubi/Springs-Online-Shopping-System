@@ -12,12 +12,12 @@ class Seller : public User
         ProductManager& productManager;
 
     public:
-        Seller(string name, string email, ProductManager& pm);
+        Seller(const string& n, const string& c, const string& add, const string& mail, const string& pass, ProductManager& pm);
         virtual ~Seller();
+        void displayMenu() const override;
+
         void addProduct();
         void removeProduct();
         void updateProduct();
-        void displayMenu() const override;
 };
-
 #endif
