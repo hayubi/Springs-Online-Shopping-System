@@ -220,8 +220,8 @@ void ProductManager::generateReceipt(const string& customerEmail, const vector<P
 
 void ProductManager::listProductsInRange(double minPrice, double maxPrice) const 
 {
-    if (minPrice < 200) {
-        cout << "Minimum price must be at least 200.\n";
+    if (minPrice < 2) {
+        cout << "Minimum price must be at least 2.\n";
         return;
     }
 
