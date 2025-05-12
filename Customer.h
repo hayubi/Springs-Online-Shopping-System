@@ -11,11 +11,12 @@ class Customer : public User
         int points;
         
     public:
-        Customer(string, string, int pts = 0);
+        Customer(const string& n, const string& c, const string& add, const string& mail, const string& pass, int pts = 0);
+        void displayMenu() const override;
+
         void addToCart(const Product&);
         void viewCart() const;
         void checkout();
-        void displayMenu() const override;
         void buy_product();
 };
 
