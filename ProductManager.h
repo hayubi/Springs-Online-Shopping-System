@@ -18,6 +18,7 @@ class ProductManager
         void removeProduct(const string& name, const string& seller);
         void updateQuantity(const string& name, const string& seller, int newQuantity);
         void listProducts() const;
+        bool isDuplicateID(int id);
 
         void loadProductsFromFile();
         void saveProductsToFile();
