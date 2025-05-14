@@ -31,7 +31,13 @@ void ProductManager::removeProduct(const string& name, const string& seller)
         }
     }
 }
-
+bool ProductManager::isDuplicateID(int id) {
+    for (const auto& p : products) {
+        if (p.getId() == id)
+            return true;
+    }
+    return false;
+}
 void ProductManager::listProducts() const 
 {
     ifstream fin("products.txt");
