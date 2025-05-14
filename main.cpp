@@ -292,9 +292,9 @@ int main()
             }
 
             int role;
-            if (loadUserDetails("customers.txt", email, password, name, contact, address)) 
+            if (validateLogin("customers.txt", email, password, name, contact, address)) 
                 role = 1;
-            else if (loadUserDetails("sellers.txt", email, password, name, contact, address)) 
+            else if (validateLogin("sellers.txt", email, password, name, contact, address)) 
                 role = 2;
 
             else 
