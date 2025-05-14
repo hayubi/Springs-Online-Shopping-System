@@ -183,14 +183,23 @@ void handleSellerSession(Seller& seller, ProductManager& pm)
         seller.displayMenu();
         cin >> choice;
 
-        if (choice == 1) 
+if (choice == 1) 
         {
             int id, qty;
             string name;
             double price;
+            while(true){
 
             cout << "Enter product ID: ";
             cin >> id;
+            if (pm.isDuplicateID(id)) {
+            cout << "This product ID already exists. Please enter a unique ID.\n";
+             }
+             else {
+                break;
+             } 
+             // or ask again 
+            }
             cout << "Enter product name: ";
             cin >> name;
             cout << "Enter price: $";
@@ -199,8 +208,7 @@ void handleSellerSession(Seller& seller, ProductManager& pm)
             cin >> qty;
 
             pm.addProduct(Product(id, name, price, qty, seller.getEmail()));
-        }
-        else if (choice == 2) 
+        }        else if (choice == 2) 
         {
             int id, newQty;
             cout << "Enter product ID to update: ";
