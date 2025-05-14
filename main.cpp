@@ -183,7 +183,7 @@ void handleSellerSession(Seller& seller, ProductManager& pm)
         seller.displayMenu();
         cin >> choice;
 
-if (choice == 1) 
+        if (choice == 1) 
         {
             int id, qty;
             string name;
@@ -208,7 +208,8 @@ if (choice == 1)
             cin >> qty;
 
             pm.addProduct(Product(id, name, price, qty, seller.getEmail()));
-        }        else if (choice == 2) 
+        }
+        else if (choice == 2) 
         {
             int id, newQty;
             cout << "Enter product ID to update: ";
@@ -300,9 +301,9 @@ int main()
             }
 
             int role;
-            if (validateLogin("customers.txt", email, password, name, contact, address)) 
+            if (validateLogin("customers.txt", email, password)) 
                 role = 1;
-            else if (validateLogin("sellers.txt", email, password, name, contact, address)) 
+            else if (validateLogin("sellers.txt", email, password)) 
                 role = 2;
 
             else 
